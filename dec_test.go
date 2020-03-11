@@ -141,7 +141,6 @@ func TestDecRound(t *testing.T) {
 		{NewDecBig(new(big.Int).Lsh(big.NewInt(1), 64), 0), -6, RoundHalfUp, NewDec(18446744073710, -6)},
 	}
 	for i, tt := range decRoundTests {
-		t.Logf("tt = %+v\n", tt)
 		z := new(Dec).Round(tt.in, tt.s, tt.r)
 		if tt.exp.Cmp(z) != 0 {
 			t.Errorf("#%d Round got %v; expected %v", i, z, tt.exp)
@@ -178,6 +177,7 @@ var decStringTests = []struct {
 	{"1", "1", 1, 0, true, true},
 	{"1.00", "1.00", 100, 2, true, true},
 	{"10", "10", 10, 0, true, true},
+	{"1,000", "1000", 1000, 0, true, true},
 	{"ignored", "10", 1, -1, true, false},
 	// other tests
 	{"+0", "0", 0, 0, true, true},

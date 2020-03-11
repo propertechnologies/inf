@@ -480,6 +480,8 @@ loop:
 			return nil, err
 		}
 		switch {
+		case ch == ',':
+			continue
 		case ch == '+' || ch == '-':
 			if len(unscaled) > 0 || dp >= 0 { // must be first character
 				r.UnreadRune()
