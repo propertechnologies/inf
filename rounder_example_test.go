@@ -1,11 +1,9 @@
-package inf_test
+package inf
 
 import (
 	"fmt"
 	"os"
 	"text/tabwriter"
-
-	"gopkg.in/inf.v0"
 )
 
 // This example displays the results of Dec.Round with each of the Rounders.
@@ -13,7 +11,7 @@ import (
 func ExampleRounder() {
 	var vals = []struct {
 		x string
-		s inf.Scale
+		s Scale
 	}{
 		{"-0.18", 1}, {"-0.15", 1}, {"-0.12", 1}, {"-0.10", 1},
 		{"-0.08", 1}, {"-0.05", 1}, {"-0.02", 1}, {"0.00", 1},
@@ -23,15 +21,15 @@ func ExampleRounder() {
 
 	var rounders = []struct {
 		name    string
-		rounder inf.Rounder
+		rounder Rounder
 	}{
-		{"RoundDown", inf.RoundDown}, {"RoundUp", inf.RoundUp},
-		{"RoundCeil", inf.RoundCeil}, {"RoundFloor", inf.RoundFloor},
-		{"RoundHalfDown", inf.RoundHalfDown}, {"RoundHalfUp", inf.RoundHalfUp},
-		{"RoundHalfEven", inf.RoundHalfEven}, {"RoundExact", inf.RoundExact},
+		{"RoundDown", RoundDown}, {"RoundUp", RoundUp},
+		{"RoundCeil", RoundCeil}, {"RoundFloor", RoundFloor},
+		{"RoundHalfDown", RoundHalfDown}, {"RoundHalfUp", RoundHalfUp},
+		{"RoundHalfEven", RoundHalfEven}, {"RoundExact", RoundExact},
 	}
 
-	fmt.Println("The results of new(inf.Dec).Round(x, s, inf.RoundXXX):")
+	fmt.Println("The results of new(Dec).Round(x, s, RoundXXX):")
 	fmt.Println()
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', tabwriter.AlignRight)
 	fmt.Fprint(w, "x\ts\t|\t")
@@ -42,8 +40,8 @@ func ExampleRounder() {
 	for _, v := range vals {
 		fmt.Fprintf(w, "%s\t%d\t|\t", v.x, v.s)
 		for _, r := range rounders {
-			x, _ := new(inf.Dec).SetString(v.x)
-			z := new(inf.Dec).Round(x, v.s, r.rounder)
+			x, _ := new(Dec).SetString(v.x)
+			z := new(Dec).Round(x, v.s, r.rounder)
 			fmt.Fprintf(w, "%d\t", z)
 		}
 		fmt.Fprintln(w)
@@ -51,7 +49,7 @@ func ExampleRounder() {
 	w.Flush()
 
 	// Output:
-	// The results of new(inf.Dec).Round(x, s, inf.RoundXXX):
+	// The results of new(Dec).Round(x, s, RoundXXX):
 	//
 	//      x s | Down   Up Ceil Floor HalfDown HalfUp HalfEven Exact
 	//  -0.18 1 | -0.1 -0.2 -0.1  -0.2     -0.2   -0.2     -0.2 <nil>
